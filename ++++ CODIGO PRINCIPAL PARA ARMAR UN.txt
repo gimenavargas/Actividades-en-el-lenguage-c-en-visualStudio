@@ -1,0 +1,102 @@
+++++ CODIGO PRINCIPAL PARA ARMAR UNA CALCULADORA SIMPLE +++
+
+
+DECLARAMOS LAS VARIABLES:
+
+double primero;
+double segundo;
+string operador;
+
+INGRESAMOS LA LOGICA A LOS BOTONES DE LOS NUMEROS DEL " 0 - 9":
+          if (textBox1.Text == "")
+            {
+                textBox1.Text = "0";
+            }
+            else
+            {
+                textBox1.Text = textBox1.Text + "0";
+            }
+
+INGRESAMOS EL CODIGO DEL PUNTO 
+          if (this.textBox1.Text.Contains('.') == false)
+            {
+                this.textBox1.Text = this.textBox1.Text + ".";
+            }
+
+INGRESAMOS LA LOGICA DE LOS OPERADORES
+         if (double.TryParse(textBox1.Text, out double numero))
+            {
+                primero = numero;
+                operador = "/";
+                textBox1.Clear();
+                textBox1.Focus();
+            }
+            else
+            {
+                // Manejar la situación en la que el texto no es un número válido
+                textBox1.Text = "¡Error de entrada!";
+            }
+
+INGRESAMOS LA LOGICA DEL BOTON IGUAL 
+        try
+            {
+                // Convertir el segundo operando
+                if (double.TryParse(textBox1.Text, out double segundo))
+                {
+                    // Realizar el cálculo basado en el operador
+                    switch (operador)
+                    {
+                        case "+":
+                            textBox1.Text = (primero + segundo).ToString();
+                            break;
+
+                        case "-":
+                            textBox1.Text = (primero - segundo).ToString();
+                            break;
+
+                        case "*":
+                            textBox1.Text = (primero * segundo).ToString();
+                            break;
+
+                        case "/":
+                            // Manejar la división por cero
+                            if (segundo != 0)
+                            {
+                                textBox1.Text = (primero / segundo).ToString();
+                            }
+                            else
+                            {
+                                textBox1.Text = "No se puede dividir entre cero.";
+                            }
+                            break;
+
+                        default:
+                            textBox1.Text = "Operador no válido.";
+                            break;
+                    }
+                }
+                else
+                {
+                    textBox1.Text = "El segundo operando no es válido.";
+                }
+            }
+            catch
+            {
+                textBox1.Text = "Se produjo un error al calcular el resultado.";
+            }
+
+BORRAR TODO 
+
+textBox1.Text = "";
+
+BORRAR POR NUMERO 
+
+if (textBox1.Text.Length > 0)
+            {
+                textBox1.Text = textBox1.Text.Substring(0, textBox1.Text.Length - 1);
+            }
+
+APAGADO
+
+this.close();
+}
